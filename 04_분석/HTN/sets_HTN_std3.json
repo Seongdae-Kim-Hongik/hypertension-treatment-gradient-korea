@@ -1,0 +1,133 @@
+{
+ "tag": "HTN",
+ "outcome_column": "nhis__고혈압__진료실인원수",
+ "fixed_on": "2026-10-19 (결과 보기 전 고정; 데이터 값 미열람, 변수 목록·문헌만 사용)",
+ "population_column": "population",
+ "expected_E": "population × 전국 연도별 조율(간접표준화), PLAN §0",
+ "forced": [
+  "eloc__DT_1YL20421E__1인당도시지역면적현황__도시지역인구",
+  "chk__요양기관_의원",
+  "eloc__DT_1YL20701__남녀성비＜br＞(A÷B×100)",
+  "eloc__DT_1YL20891__재정자주도(세입과목개편전)",
+  "ext__pop80_share"
+ ],
+ "forced_transform": {
+  "eloc__DT_1YL20421E__1인당도시지역면적현황__도시지역인구": "ratio_pop",
+  "chk__요양기관_의원": "per100k",
+  "eloc__DT_1YL20701__남녀성비＜br＞(A÷B×100)": "none",
+  "eloc__DT_1YL20891__재정자주도(세입과목개편전)": "none",
+  "eloc__DT_1YL20631__고령인구비율＜br＞(A÷B×100)": "none",
+  "ext__pop80_share": "none"
+ },
+ "negative_controls": [
+  "eloc__DT_1YL21081__주민만명당화재발생건수＜br＞(A÷B×10000)",
+  "eloc__INH_1BB0002__다문화혼인비중(%)",
+  "kchs__DT_117075_H_BELT_BACK__SR"
+ ],
+ "include_transform": {
+  "chk__정상B_비만관리_수검자대비비율": "none",
+  "kchs__DT_H_EX_WALK__SR": "none",
+  "kchs__DT_H_EX_PHY__SR": "none",
+  "fac__total": "per100k",
+  "fac__생활체육관": "per100k",
+  "vil__계": "per100k",
+  "kchs__DT_H_SM__SR": "none",
+  "kchs__DT_117075_H_DR_HIGH_WH__SR": "none",
+  "kchs__DT_H_MENTAL_STRESS__SR": "none",
+  "kchs__DT_HEALTH_RECOG__SR": "none",
+  "kchs__DT_11775_NUT_LABEL_UTIL__SR": "none",
+  "chk__수검률": "none",
+  "eloc__DT_1YL12701__독거노인가구비율＜br＞(A÷B×100)": "none",
+  "eloc__INH_1ES3A02S_03__고용률(%)__계": "none",
+  "eloc__DT_1YL15004__상용직비중＜br＞(A÷B×100)": "none",
+  "eloc__DT_1YL202105E__비율__녹지지역": "none",
+  "eloc__DT_1YL20731__1인당자동차등록대수＜br＞(A÷B)": "none"
+ },
+ "sets": {
+  "S1_narrative_full": [
+   "chk__정상B_비만관리_수검자대비비율",
+   "kchs__DT_H_EX_WALK__SR",
+   "kchs__DT_H_EX_PHY__SR",
+   "fac__total",
+   "fac__생활체육관",
+   "vil__계",
+   "kchs__DT_H_SM__SR",
+   "kchs__DT_117075_H_DR_HIGH_WH__SR",
+   "kchs__DT_H_MENTAL_STRESS__SR",
+   "kchs__DT_HEALTH_RECOG__SR",
+   "kchs__DT_11775_NUT_LABEL_UTIL__SR",
+   "chk__수검률",
+   "eloc__DT_1YL12701__독거노인가구비율＜br＞(A÷B×100)",
+   "eloc__INH_1ES3A02S_03__고용률(%)__계",
+   "eloc__DT_1YL15004__상용직비중＜br＞(A÷B×100)",
+   "eloc__DT_1YL202105E__비율__녹지지역",
+   "eloc__DT_1YL20731__1인당자동차등록대수＜br＞(A÷B)"
+  ],
+  "S2_core": [
+   "chk__정상B_비만관리_수검자대비비율",
+   "kchs__DT_117075_H_DR_HIGH_WH__SR",
+   "kchs__DT_H_SM__SR",
+   "kchs__DT_H_EX_WALK__SR",
+   "fac__total",
+   "chk__수검률",
+   "eloc__DT_1YL15004__상용직비중＜br＞(A÷B×100)",
+   "eloc__DT_1YL12701__독거노인가구비율＜br＞(A÷B×100)"
+  ],
+  "S3_physical_activity": [
+   "kchs__DT_H_EX_WALK__SR",
+   "kchs__DT_H_EX_PHY__SR",
+   "fac__total",
+   "fac__생활체육관",
+   "vil__계",
+   "eloc__DT_1YL202105E__비율__녹지지역",
+   "eloc__DT_1YL20731__1인당자동차등록대수＜br＞(A÷B)"
+  ],
+  "S4_socioeconomic": [
+   "eloc__DT_1YL15004__상용직비중＜br＞(A÷B×100)",
+   "eloc__INH_1ES3A02S_03__고용률(%)__계",
+   "eloc__DT_1YL12701__독거노인가구비율＜br＞(A÷B×100)",
+   "kchs__DT_H_MENTAL_STRESS__SR",
+   "kchs__DT_HEALTH_RECOG__SR",
+   "kchs__DT_11775_NUT_LABEL_UTIL__SR",
+   "chk__수검률"
+  ],
+  "S5_lifestyle_metabolic": [
+   "chk__정상B_비만관리_수검자대비비율",
+   "kchs__DT_117075_H_DR_HIGH_WH__SR",
+   "kchs__DT_H_SM__SR",
+   "kchs__DT_11775_NUT_LABEL_UTIL__SR",
+   "kchs__DT_H_EX_PHY__SR"
+  ],
+  "REF_forced_only": []
+ },
+ "rules": {
+  "likelihood": "forced-only 모형 WAIC 낮은 쪽(Poisson/NB)",
+  "set_choice": "WAIC 최소, 4 이내면 변수 적은 세트",
+  "credible": "95% CrI 1 제외",
+  "vif_drop": 10,
+  "multiverse_specs": 200,
+  "effect_scale": "per 1 SD (IRR)",
+  "main_set_note": "시리즈 규칙(10/6 저자 결정): 주모형=S1_narrative_full(게이트 통과 가설 변수 전부)+forced, VIF>10 변수는 유지·보고, 규칙 선택 간명 세트는 민감도"
+ },
+ "note": "고혈압(I10-I15): 비만·음주·신체활동 부족·염분·스트레스·SES가 핵심, 검진 수검률은 탐지 경로. 같은 질환의 다른 측정(kchs 고혈압 진단경험률·치료율·혈압 인지율, chk 고혈압 판정·혈압관리)은 동어반복으로 제외. 나트륨 섭취 직접 변수 없음(자료 없음)",
+ "extra_columns": {
+  "ext__pop80_share": [
+   "HTN_Estd2.csv",
+   "pop80_share_raw"
+  ]
+ },
+ "offset_E_column": "E_std2",
+ "offset_E_label": "age-standardised E, fine age bands (E_std2)",
+ "graph": "593-edge contact graph (BRCA 2026-11-04 graph_audit: polygon intersections + six retained island links; 227+2 components), ST_GRAPH=04_분석/HTN/graph_593.graph",
+ "population_override": [
+  {
+   "year": 2023,
+   "fbd_region": "경상남도창원시",
+   "population": 1009038,
+   "source": "KOSIS DT_1YL20651E 2023 통합창원시 계; FBD_DATA_ZIP/2023.csv 창원 블록이 2022값 복사(유방암 11/4 population_final_audit)"
+  }
+ ],
+ "offset_E_file": "HTN_Estd2.csv",
+ "fixed_on_std3": "2026-11-04 (결과 열람 전)",
+ "std3_note": "2026-11-04 PLAN R45(결과 열람 전 사전지정, 15번 런북 4호, §1-B std3 표준 체인): v1 sets_HTN.json 세트·방향·음성대조 그대로(문헌 29편 PMID 검증, 10/19 고정). 주분석 = 사전지정 v1 S1_narrative_full(시리즈 규칙: 가설 변수 전부 + forced). 10/19 v1·v2 비교에서 고혈압만 v2(기전 축소 세트)가 WAIC·간명성 우세였으나 v2는 결과를 본 뒤 만든 세트라 주분석으로 쓰지 않고 민감도로 둔다. 주분석 E = E_std2(39_build_Estd_fine.py, 10구간·75+, 창원 2023 교정 원자료). forced: 고령인구비율(65+) 제거, 80세 이상 인구 비율 추가(관절염 std3와 같은 논리). 성별×연령 표준화 불가(전국 298분류 표 성별 축 없음) → 성비 강제통제·한계. 그래프 593 edge. 비교 결과(NCO) = 감염병(INFECT)·위암(GCA)(신체활동 경로가 약한 진료 결과; 당뇨·관절염은 같은 신체활동·비만 경로라 제외). 민감도 = s577(그래프)·s2(80+ 제외)·s8(8구간 E), KH I-IV 성분 인식판, 88g 6묶음, 88h. 판단 기준은 런북 15 §1-C(구조 민감도 우선, 지역 내·간 분해, 비교 결과 변수별 방향, 연도별 Moran 추세, 군·시·구 집계, 채움 변수 공개)."
+}
