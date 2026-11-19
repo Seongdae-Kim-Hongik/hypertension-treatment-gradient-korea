@@ -2,11 +2,11 @@
 
 Analysis code for the manuscript
 
-> Kim S. *Is more public sports infrastructure followed by less hypertension treatment? Fourteen years of nationwide district data from Korea* (under review).
+> Kim S. *Did more public sports facilities mean less hypertension treatment in Korea?* (under review).
 
 This archive contains code only. The processed district-year data, result tables, adjacency graph, and boundary files are available from the author on reasonable request. All source statistics are public.
 
-Archived on Zenodo: https://doi.org/10.5281/zenodo.24355960
+Archived on Zenodo: https://doi.org/10.5281/zenodo.24356285
 
 ## Contents
 

@@ -133,7 +133,9 @@ def data_statement():
 def code_statement():
     return (f"The analysis code and the scripts that generate every number, table, and figure are archived on Zenodo (https://doi.org/{ZENODO}); the record and its files are openly available.")
 
-def put_fig(J, k):
+def put_fig(J, k):   # 포털 지시: 그림은 별도 파일, 원고에는 끼우지 않음 → 범례는 참고문헌 뒤 'Figure Legends'
+    return
+def put_fig_embedded(J, k):
     from PIL import Image
     src = os.path.join(FIGS, f"Main_Fig{k}.png"); sm = os.path.join(FIGS, f"_embed_Fig{k}.png")
     im = Image.open(src); w = 2000; im.resize((w, int(im.height * w / im.width))).save(sm, dpi=(300, 300))
@@ -187,6 +189,8 @@ def build(bw=0, aw=0, tw=0):
         J.head(h, 2); J.para(t)
     J.page_break(); J.head("References", 1)
     for n, k in enumerate(J.cites, 1): J.para(f"{n}. {spref(REFS[k])}")
+    J.page_break(); J.head("Figure Legends", 1)
+    for k in sorted(FIGCAP): J.para(f"<b>Figure {k}.</b> {FIGCAP[k]}.", after=8)
     J.page_break(); J.head("Novelty and Relevance", 1)
     for p in D["Novelty and Relevance"]:
         if p.startswith("### "): J.head(p[4:].strip(), 2); continue
@@ -236,7 +240,7 @@ if __name__ == "__main__":
     J, D = build(); J.doc_title = "Manuscript"; J.save(p); bw, tw = docx_bw(p)
     J, D = build(bw, aw, tw); J.doc_title = "Manuscript"; J.save(p); bw2, tw2 = docx_bw(p)
     J, D = build(bw2, aw, tw2); J.doc_title = "Manuscript"; J.save(p); bw3, tw3 = docx_bw(p); assert tw3 == tw2, (tw2, tw3); tw2 = tw3
-    heads = {"Abstract", "Introduction", "Methods", "Results", "Discussion", "Perspectives", "Article Information", "Acknowledgments", "Sources of Funding", "Disclosures", "References", "Strengths and limitations", "Ethics approval", "Data availability", "Code availability", "Author contributions", "Supplemental Material", "Novelty and Relevance", "What Is New?", "What Is Relevant?", "Clinical/Pathophysiological Implications?"} | {h for h, _ in C.METHODS + C.RESULTS}
+    heads = {"Abstract", "Introduction", "Methods", "Results", "Discussion", "Perspectives", "Article Information", "Acknowledgments", "Sources of Funding", "Disclosures", "References", "Strengths and limitations", "Ethics approval", "Data availability", "Code availability", "Author contributions", "Supplemental Material", "Figure Legends", "Novelty and Relevance", "What Is New?", "What Is Relevant?", "Clinical/Pathophysiological Implications?"} | {h for h, _ in C.METHODS + C.RESULTS}
     fix_orphans(p, heads)
     open(os.path.join(OUT, "wordcount.txt"), "w").write(f"body_words={bw}\nabstract_words={aw}\ntotal_words={tw2}\nrefs={len(J.cites)}\ntables={N_TAB}\nfigures={N_FIG}\n")
     print(f"body {bw} | abstract {aw} | total {tw2} | refs {len(J.cites)}")

@@ -19,7 +19,7 @@ EN = {"전라남도": "South Jeolla", "경상북도": "North Gyeongsang", "경�
       "광주시": "Gwangju", "울산시": "Ulsan", "대전시": "Daejeon", "세종시": "Sejong", "제주도": "Jeju"}
 def sidos(d, n):
     return ", ".join(f"{EN.get(k, k)} ({v})" for k, v in list(d.items())[:n])
-TITLE = "Is more public sports infrastructure followed by less hypertension treatment? Fourteen years of nationwide district data from Korea"
+TITLE = "Did more public sports facilities mean less hypertension treatment in Korea?"
 RUNNING = "Sports facilities and hypertension treatment"
 KEYWORDS = "hypertension, epidemiology, exercise, built environment, spatial analysis, Republic of Korea"
 HOT_KH = {k: int(N["mv"][k]["n_specs"]) for k in ROB}
