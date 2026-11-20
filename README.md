@@ -2,11 +2,11 @@
 
 Analysis code for the manuscript
 
-> Kim S. *Did more public sports facilities mean less hypertension treatment in Korea?* (under review).
+> Kim S. *Within-district growth in public sports facilities tracked slightly less hypertension care across Korea over fourteen years of nationwide claims* (under review).
 
 This archive contains code only. The processed district-year data, result tables, adjacency graph, and boundary files are available from the author on reasonable request. All source statistics are public.
 
-Archived on Zenodo: https://doi.org/10.5281/zenodo.24356285
+Archived on Zenodo: https://doi.org/10.5281/zenodo.24408661 (version 1.1.0)
 
 ## Contents
 
@@ -56,3 +56,7 @@ Code: MIT License (`LICENSE`).
 ## Contact
 
 Seongdae Kim, Hongik University (kimsd@hongik.ac.kr), ORCID 0000-0002-1525-0091
+
+## Checks
+
+Expected counts and the model offset contain no added constants (no `E + 1`, `log(E + c)` or lower bounds on `E`); the only constant is a continuity correction of 0.5 on observed counts in the descriptive yearly Moran's I of log ratios (`01_스크립트/81_fit_inla.R`), which does not enter any model.

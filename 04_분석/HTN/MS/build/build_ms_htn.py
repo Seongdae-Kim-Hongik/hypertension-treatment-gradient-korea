@@ -122,7 +122,7 @@ FIGCAP = {
 }
 def foot_row(J, text, sz=10, ls=16):
     from docx.enum.text import WD_LINE_SPACING
-    t = J.doc.tables[-1]; r = t.add_row(); m = r.cells[0].merge(r.cells[-1]); m.text = ""; p = m.paragraphs[0]
+    p = J.doc.add_paragraph()   # 표 각주 = 표 바로 아래 문단(병합 행이면 마지막 가로줄이 안 보임, check_docx_gate)
     p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.EXACTLY; p.paragraph_format.line_spacing = Pt(ls); p.paragraph_format.space_before = Pt(4)
     c = J.counting; J.counting = False; J._emit(p, text, sz); J.counting = c
 def put_table(J, t, fs=8.5):
@@ -155,12 +155,12 @@ def build(bw=0, aw=0, tw=0):
     J.para("Department of Biohealth Convergence Open Sharing System, Hongik University, Seoul, Republic of Korea")
     J.para(f"<b>Corresponding author:</b> Seongdae Kim, {ADDRESS}. E-mail: kimsd@hongik.ac.kr. ORCID: {ORCID}", before=6)
     J.para(f"<b>Short title:</b> {RUNNING}", before=6)
-    J.para(f"<b>Total word count:</b> {tw:,} words (title page through the last table, excluding the Supplemental Material); abstract {aw} words. <b>Tables:</b> {N_TAB}. <b>Figures:</b> {N_FIG}.", before=6)
+    J.para(f"<b>Word count:</b> main text {bw:,} words; abstract {aw} words. <b>Tables:</b> {N_TAB}. <b>Figures:</b> {N_FIG}.", before=6)
     # 초록·키워드
     J.page_break(); J.head("Abstract", 1)
     for p in D["Abstract"]:
         if p.startswith("Keywords:"): J.para(f"<b>Keywords:</b> {C.KEYWORDS}", before=6); continue
-        lab, rest = p.split(": ", 1); assert lab in ("Background", "Methods", "Results", "Conclusions"); J.para(f"<b>{lab}:</b> {rest}")
+        J.para(p)
     # 본문
     J.page_break(); J.counting = True
     J.head("Introduction", 1)
@@ -175,13 +175,13 @@ def build(bw=0, aw=0, tw=0):
             else: put_fig(J, k)
     J.head("Discussion", 1)
     for p in D["Discussion"]:
-        if p.startswith("### Perspectives"): J.head("Perspectives", 1); continue
+        if p.startswith("### Conclusions"): J.head("Conclusions", 1); continue
         if p.startswith("### "): J.head(p[4:].strip(), 2); continue
         J.para(pandoc_cites(p), indent=True)
     J.counting = False
-    J.page_break(); J.head("Article Information", 1)
-    for h, t in (("Acknowledgments", "None."), ("Sources of Funding", "None."),
-                 ("Disclosures", "None."),
+    J.page_break(); J.head("Declarations", 1)
+    for h, t in (("Acknowledgments", "None."), ("Funding", "This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors."),
+                 ("Declaration of interest", "The author reports there are no competing interests to declare."),
                  ("Ethics approval", "The study used published aggregate statistics only and was approved by the Institutional Review Board of Hongik University (7002340-202511-HR-012, 4 November 2025; continuing review 7002340-202611-HR-040, 3 November 2026), which waived informed consent. The study was performed in accordance with the Declaration of Helsinki."),
                  ("Data availability", data_statement()), ("Code availability", code_statement()),
                  ("Author contributions", "Seongdae Kim conceived and designed the study, curated the data, performed the analysis, interpreted the results, and wrote and revised the manuscript. The author read and approved the final manuscript."),
@@ -191,15 +191,11 @@ def build(bw=0, aw=0, tw=0):
     for n, k in enumerate(J.cites, 1): J.para(f"{n}. {spref(REFS[k])}")
     J.page_break(); J.head("Figure Legends", 1)
     for k in sorted(FIGCAP): J.para(f"<b>Figure {k}.</b> {FIGCAP[k]}.", after=8)
-    J.page_break(); J.head("Novelty and Relevance", 1)
-    for p in D["Novelty and Relevance"]:
-        if p.startswith("### "): J.head(p[4:].strip(), 2); continue
-        for b in p.split("\n"): J.para("\u2022 " + b.lstrip("- ").strip())
     return J, D
 
 def docx_bw(path):   # 본문(Introduction~Statements 직전, 소제목 포함, 그림 캡션 제외)과 전체(초록~참고문헌, 표·캡션 포함, 제목 면 제외)
     from docx import Document
-    d = Document(path); ps = [x.text for x in d.paragraphs]; i = ps.index("Introduction"); j = ps.index("Article Information")
+    d = Document(path); ps = [x.text for x in d.paragraphs]; i = ps.index("Introduction"); j = ps.index("Declarations")
     body = sum(len(x.split()) for x in ps[i:j] if not x.startswith("Fig. "))
     a = ps.index("Abstract"); r = ps.index("References")
     tot = sum(len(x.split()) for x in ps) + sum(len(c.text.split()) for t in d.tables for rw in t.rows for c in {id(x._tc): x for x in rw.cells}.values())
@@ -240,7 +236,7 @@ if __name__ == "__main__":
     J, D = build(); J.doc_title = "Manuscript"; J.save(p); bw, tw = docx_bw(p)
     J, D = build(bw, aw, tw); J.doc_title = "Manuscript"; J.save(p); bw2, tw2 = docx_bw(p)
     J, D = build(bw2, aw, tw2); J.doc_title = "Manuscript"; J.save(p); bw3, tw3 = docx_bw(p); assert tw3 == tw2, (tw2, tw3); tw2 = tw3
-    heads = {"Abstract", "Introduction", "Methods", "Results", "Discussion", "Perspectives", "Article Information", "Acknowledgments", "Sources of Funding", "Disclosures", "References", "Strengths and limitations", "Ethics approval", "Data availability", "Code availability", "Author contributions", "Supplemental Material", "Figure Legends", "Novelty and Relevance", "What Is New?", "What Is Relevant?", "Clinical/Pathophysiological Implications?"} | {h for h, _ in C.METHODS + C.RESULTS}
+    heads = {"Abstract", "Introduction", "Methods", "Results", "Discussion", "Conclusions", "Declarations", "Acknowledgments", "Funding", "Declaration of interest", "References", "Strengths and limitations", "Ethics approval", "Data availability", "Code availability", "Author contributions", "Supplemental Material", "Figure Legends"} | {h for h, _ in C.METHODS + C.RESULTS}
     fix_orphans(p, heads)
     open(os.path.join(OUT, "wordcount.txt"), "w").write(f"body_words={bw}\nabstract_words={aw}\ntotal_words={tw2}\nrefs={len(J.cites)}\ntables={N_TAB}\nfigures={N_FIG}\n")
     print(f"body {bw} | abstract {aw} | total {tw2} | refs {len(J.cites)}")

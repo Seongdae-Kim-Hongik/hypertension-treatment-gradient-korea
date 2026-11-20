@@ -1,4 +1,3 @@
-# content_htn.py — 고혈압 원고(2026-11-19 Hypertension판)의 Methods·Results 문장(수치는 numbers_htn에서만). 서론·고찰·결론은 draft md.
 #  인용 = [@key](manifest key) 또는 [@web:...]. 단독 저자 → 1인칭 금지. 미국식 철자. 결과 절에 해석 금지.
 from numbers_htn import load, ROB, RS
 import os, pandas as pd
@@ -19,9 +18,9 @@ EN = {"전라남도": "South Jeolla", "경상북도": "North Gyeongsang", "경�
       "광주시": "Gwangju", "울산시": "Ulsan", "대전시": "Daejeon", "세종시": "Sejong", "제주도": "Jeju"}
 def sidos(d, n):
     return ", ".join(f"{EN.get(k, k)} ({v})" for k, v in list(d.items())[:n])
-TITLE = "Did more public sports facilities mean less hypertension treatment in Korea?"
-RUNNING = "Sports facilities and hypertension treatment"
-KEYWORDS = "hypertension, epidemiology, exercise, built environment, spatial analysis, Republic of Korea"
+TITLE = "Within-district growth in public sports facilities tracked slightly less hypertension care across Korea over fourteen years of nationwide claims"
+RUNNING = "Sports facilities and hypertension care"
+KEYWORDS = "built environment; physical activity; sports facilities; blood pressure; spatiotemporal analysis; Bayesian disease mapping; Republic of Korea"
 HOT_KH = {k: int(N["mv"][k]["n_specs"]) for k in ROB}
 _R14 = N["ret14"]
 
